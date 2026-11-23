@@ -1,0 +1,8 @@
+ID,Category,Description,Amount,Expense Date
+5,"Salaries","Employee salaries",3000.00,2024-02-01
+4,"Marketing","Facebook ads campaign",300.00,2024-01-20
+3,"Supplies","Office supplies and stationery",150.00,2024-01-15
+2,"Utilities","Electricity bill",200.00,2024-01-10
+1,"Rent","Office rent for January",1500.00,2024-01-01
+
+TOTAL EXPENSES:,,,,5150.00

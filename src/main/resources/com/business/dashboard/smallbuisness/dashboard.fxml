@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="900" prefWidth="1400" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.business.dashboard.smallbuisness.DashboardController">
+
+    <!-- TOP SECTION -->
+    <top>
+        <VBox style="-fx-background-color: #f5f5f5; -fx-padding: 20;">
+            <HBox alignment="CENTER_LEFT" spacing="20">
+                <Label text="📊 Business Dashboard">
+                    <font><Font name="System Bold" size="24" /></font>
+                </Label>
+                <Region HBox.hgrow="ALWAYS" />
+                <Button onAction="#handleRefresh" text="Refresh" />
+                <Button onAction="#handleExportSummary" text="Export Summary" />
+            </HBox>
+
+            <Separator style="-fx-padding: 10 0 10 0;" />
+
+            <!-- Summary Cards -->
+            <HBox spacing="20" style="-fx-padding: 10 0 0 0;">
+                <VBox spacing="5" style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #3498db; -fx-border-width: 2;" HBox.hgrow="ALWAYS">
+                    <Label style="-fx-text-fill: #555;" text="Total Sales" />
+                    <Label fx:id="lblTotalSales" style="-fx-text-fill: #3498db;" text="">
+                        <font><Font name="System Bold" size="28" /></font>
+                    </Label>
+                    <Label fx:id="lblSalesCount" style="-fx-text-fill: #888; -fx-font-size: 12;" text="0 transactions" />
+                </VBox>
+
+                <VBox spacing="5" style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #e74c3c; -fx-border-width: 2;" HBox.hgrow="ALWAYS">
+                    <Label style="-fx-text-fill: #555;" text="Total Expenses" />
+                    <Label fx:id="lblTotalExpenses" style="-fx-text-fill: #e74c3c;" text="">
+                        <font><Font name="System Bold" size="28" /></font>
+                    </Label>
+                    <Label fx:id="lblExpensesCount" style="-fx-text-fill: #888; -fx-font-size: 12;" text="0 transactions" />
+                </VBox>
+
+                <VBox spacing="5" style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #27ae60; -fx-border-width: 2;" HBox.hgrow="ALWAYS">
+                    <Label style="-fx-text-fill: #555;" text="Net Profit" />
+                    <Label fx:id="lblNetProfit" style="-fx-text-fill: #27ae60;" text="">
+                        <font><Font name="System Bold" size="28" /></font>
+                    </Label>
+                    <Label style="-fx-text-fill: #888; -fx-font-size: 12;" text="Sales - Expenses" />
+                </VBox>
+            </HBox>
+
+            <!-- Filter Section -->
+            <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 15 0 0 0;">
+                <Label text="Filter by Date:">
+                    <font><Font name="System Bold" size="13" /></font>
+                </Label>
+                <DatePicker fx:id="dateFromFilter" promptText="From" />
+                <Label text="to" />
+                <DatePicker fx:id="dateToFilter" promptText="To" />
+                <Button onAction="#handleFilterByDate" text="Apply Filter" />
+                <Button onAction="#handleClearFilter" text="Clear" />
+                <Region HBox.hgrow="ALWAYS" />
+                <Button onAction="#handleOpenSales" style="-fx-background-color: #1abc9c;" text="Manage Sales" textFill="WHITE" />
+                <Button onAction="#handleOpenExpenses" style="-fx-background-color: #f39c12;" text="Manage Expenses" textFill="WHITE" />
+            </HBox>
+        </VBox>
+    </top>
+
+    <!-- CENTER SECTION -->
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: #f5f5f5;">
+            <VBox spacing="20" style="-fx-padding: 20;">
+
+                <!-- Charts Row 1 -->
+                <HBox prefHeight="280" spacing="20">
+                    <LineChart fx:id="salesTrendChart" title="Sales Trend" HBox.hgrow="ALWAYS">
+                        <xAxis><CategoryAxis label="Month" /></xAxis>
+                        <yAxis><NumberAxis label="Amount ($)" /></yAxis>
+                    </LineChart>
+
+                    <LineChart fx:id="expensesTrendChart" title="Expenses Trend" HBox.hgrow="ALWAYS">
+                        <xAxis><CategoryAxis label="Month" /></xAxis>
+                        <yAxis><NumberAxis label="Amount ($)" /></yAxis>
+                    </LineChart>
+                </HBox>
+
+                <!-- Charts Row 2 -->
+                <HBox prefHeight="280" spacing="20">
+                    <BarChart fx:id="profitChart" title="Monthly Profit" HBox.hgrow="ALWAYS">
+                        <xAxis><CategoryAxis label="Month" /></xAxis>
+                        <yAxis><NumberAxis label="Profit ($)" /></yAxis>
+                    </BarChart>
+
+                    <PieChart fx:id="categoryPieChart" title="Expenses by Category" HBox.hgrow="ALWAYS" />
+                </HBox>
+
+                <!-- Recent Transactions -->
+                <HBox prefHeight="300" spacing="20">
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label style="-fx-font-weight: bold; -fx-font-size: 16; -fx-padding: 0 0 10 0;" text="Recent Sales" />
+                        <TableView fx:id="recentSalesTable" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colSaleId" prefWidth="50" text="ID" />
+                                <TableColumn fx:id="colSaleProduct" prefWidth="200" text="Product" />
+                                <TableColumn fx:id="colSaleAmount" prefWidth="100" text="Amount" />
+                                <TableColumn fx:id="colSaleDate" prefWidth="120" text="Date" />
+                            </columns>
+                        </TableView>
+                    </VBox>
+
+                    <VBox HBox.hgrow="ALWAYS">
+                        <Label style="-fx-font-weight: bold; -fx-font-size: 16; -fx-padding: 0 0 10 0;" text="Recent Expenses" />
+                        <TableView fx:id="recentExpensesTable" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colExpenseId" prefWidth="50" text="ID" />
+                                <TableColumn fx:id="colExpenseCategory" prefWidth="150" text="Category" />
+                                <TableColumn fx:id="colExpenseAmount" prefWidth="100" text="Amount" />
+                                <TableColumn fx:id="colExpenseDate" prefWidth="120" text="Date" />
+                            </columns>
+                        </TableView>
+                    </VBox>
+                </HBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+
+    <!-- BOTTOM -->
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-background-color: #2c3e50; -fx-padding: 10;">
+            <Label style="-fx-text-fill: white;" text="Business Dashboard © 2024" />
+        </HBox>
+    </bottom>
+</BorderPane>

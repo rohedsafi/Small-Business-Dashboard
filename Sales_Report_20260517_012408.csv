@@ -1,0 +1,8 @@
+ID,Product Name,Quantity,Unit Price,Total Amount,Sale Date,Customer
+5,"USB Hub",15,20.00,300.00,2024-02-05,"Office Depot"
+4,"Monitor 27 inch",3,300.00,900.00,2024-02-01,"Sarah Johnson"
+3,"Wireless Mouse",10,25.00,250.00,2024-01-22,"Tech Solutions"
+2,"Office Chair",5,150.00,750.00,2024-01-20,"ABC Company"
+1,"Laptop Dell XPS 15",2,1200.00,2400.00,2024-01-15,"John Smith"
+
+TOTAL SALES:,,,,,4600.00
